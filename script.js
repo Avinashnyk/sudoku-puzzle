@@ -129,10 +129,24 @@ function isValid(board, num, row, col) {
     return true;
 }
 
-function generateNewPuzzle() {
+function generateNewPuzzle(difficulty) {
     const newBoard = Array.from({ length: 9 }, () => Array(9).fill(0));
     solveSudoku(newBoard);
-    removeNumbers(newBoard, 40); // Adjust the number of cells to remove for difficulty
+    let cellsToRemove;
+    switch (difficulty) {
+        case 'easy':
+            cellsToRemove = 30;
+            break;
+        case 'medium':
+            cellsToRemove = 40;
+            break;
+        case 'hard':
+            cellsToRemove = 50;
+            break;
+        default:
+            cellsToRemove = 40;
+    }
+    removeNumbers(newBoard, cellsToRemove);
     return newBoard;
 }
 
@@ -147,8 +161,8 @@ function removeNumbers(board, count) {
     }
 }
 
-function newGame() {
-    currentBoard = generateNewPuzzle();
+function newGame(difficulty = 'medium') {
+    currentBoard = generateNewPuzzle(difficulty);
     renderBoard(currentBoard);
 }
 
