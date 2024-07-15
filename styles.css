@@ -25,3 +25,8 @@ body {
 .cell[contenteditable="true"] {
     background-color: #e0e0e0;
 }
+
+.highlight {
+    background-color: #cce5ff;
+}
+
