@@ -22,6 +22,7 @@ function renderBoard(board) {
             cell.contentEditable = board[row][col] === 0 ? 'true' : 'false';
             cell.innerText = board[row][col] !== 0 ? board[row][col] : '';
             cell.oninput = handleInput;
+            cell.onclick = () => highlightRowCol(row, col);
             boardElement.appendChild(cell);
         }
     }
@@ -31,6 +32,24 @@ function handleInput(e) {
     const value = e.target.innerText;
     if (!/^[1-9]$/.test(value)) {
         e.target.innerText = '';
+    }
+}
+
+function highlightRowCol(row, col) {
+    clearHighlight();
+    const boardElement = document.getElementById('sudoku-board');
+    const cells = boardElement.getElementsByClassName('cell');
+    for (let i = 0; i < 9; i++) {
+        cells[row * 9 + i].classList.add('highlight');  // Highlight the row
+        cells[i * 9 + col].classList.add('highlight');  // Highlight the column
+    }
+}
+
+function clearHighlight() {
+    const boardElement = document.getElementById('sudoku-board');
+    const cells = boardElement.getElementsByClassName('cell');
+    for (let i = 0; i < cells.length; i++) {
+        cells[i].classList.remove('highlight');
     }
 }
 
